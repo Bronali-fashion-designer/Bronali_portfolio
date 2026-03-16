@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bronali — Fashion Portfolio</title>
+  <style>
+    :root {
+      --bg: #0b0b10;
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.1);
+      --line: rgba(255,255,255,0.12);
+      --text: #f7f4ef;
+      --muted: #b9b2a7;
+      --accent: #e8cdb5;
+      --accent-2: #d8a97b;
+      --shadow: 0 20px 80px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(216,169,123,0.16), transparent 28%),
+        radial-gradient(circle at 80% 10%, rgba(232,205,181,0.08), transparent 20%),
+        linear-gradient(180deg, #0a0a0f 0%, #111117 45%, #0a0a0f 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .grain::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      opacity: 0.05;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(8, 8, 12, 0.55);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 20px rgba(216,169,123,0.7);
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav button {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: 0.25s ease;
+      font-size: 13px;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: linear-gradient(135deg, rgba(232,205,181,0.18), rgba(216,169,123,0.12));
+      border-color: rgba(232,205,181,0.34);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      max-width: 1320px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 42px 24px 60px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(52px, 9vw, 120px);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+    }
+
+    .accent-name {
+      display: inline-block;
+      background: linear-gradient(135deg, #fff9f1 0%, #f4d8bf 40%, #d9a97a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 8px 40px rgba(216,169,123,0.16);
+    }
+
+    .hero-sub {
+      max-width: 640px;
+      margin: 24px 0 24px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.85;
+    }
+
+    .profile-block {
+      max-width: 640px;
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .profile-card {
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .profile-card h3 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .profile-card p {
+      margin: 0;
+      color: #efe7db;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .interest-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .meta-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      color: #f3ece2;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .cta {
+      border: 1px solid rgba(232,205,181,0.26);
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(232,205,181,0.12), rgba(216,169,123,0.14));
+      padding: 14px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.25s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .cta.secondary {
+      background: rgba(255,255,255,0.03);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .cta:hover { transform: translateY(-2px); }
+
+    .hero-stage {
+      position: relative;
+      min-height: 620px;
+      display: grid;
+      place-items: center;
+      grid-template-columns: 190px minmax(300px, 420px) 190px;
+      gap: 18px;
+    }
+
+    .centerpiece {
+      position: relative;
+      width: min(420px, 72vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(232,205,181,0.22);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 20px 100px rgba(0,0,0,0.45);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .centerpiece::before,
+    .centerpiece::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: inherit;
+      border: 1px solid rgba(255,255,255,0.08);
+      z-index: -1;
+    }
+
+    .centerpiece::after {
+      inset: 32px;
+      border-color: rgba(232,205,181,0.1);
+    }
+
+    .center-label {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .center-label .small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+
+    .center-label .big {
+      font-family: Georgia, serif;
+      font-size: clamp(44px, 6vw, 74px);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+    }
+
+    .center-label .desc {
+      margin-top: 16px;
+      color: #d8d1c8;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .orbit-card {
+      position: relative;
+      width: 100%;
+      background: rgba(14,14,20,0.7);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 12px;
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: 0.3s ease;
+      min-height: 212px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .orbit-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(232,205,181,0.36);
+    }
+
+    .orbit-card img {
+      width: 100%;
+      height: 118px;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .orbit-card .title {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .orbit-card .count {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .orbit-column {
+      display: grid;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .section {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px 24px 100px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 44px);
+      font-family: Georgia, serif;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 84px;
+      padding: 16px;
+      border-radius: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+
+    .sidebar h3 {
+      margin: 0 0 14px;
+      font-size: 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .folder-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .folder-btn {
+      width: 100%;
+      text-align: left;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid transparent;
+      color: var(--text);
+      border-radius: 18px;
+      padding: 14px 15px;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .folder-btn:hover,
+    .folder-btn.active {
+      background: linear-gradient(135deg, rgba(232,205,181,0.16), rgba(216,169,123,0.12));
+      border-color: rgba(232,205,181,0.24);
+    }
+
+    .folder-btn span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .gallery-shell {
+      min-width: 0;
+    }
+
+    .category-panel {
+      display: none;
+      animation: fadeUp 0.45s ease both;
+    }
+
+    .category-panel.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .category-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+
+    .category-meta h3 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 34px);
+      font-family: Georgia, serif;
+    }
+
+    .category-meta p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .image-count {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .masonry {
+      column-count: 3;
+      column-gap: 18px;
+    }
+
+    .card {
+      break-inside: avoid;
+      margin-bottom: 18px;
+      border-radius: 26px;
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(232,205,181,0.26);
+    }
+
+    .card img {
+      width: 100%;
+      display: block;
+      height: auto;
+      object-fit: cover;
+      background: #0f0f14;
+    }
+
+    .card-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .card-caption strong {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .footer {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px 70px;
+    }
+
+    .footer-box {
+      padding: 28px;
+      border-radius: 32px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(232,205,181,0.08), rgba(255,255,255,0.04));
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-box h3 {
+      margin: 0 0 8px;
+      font-family: Georgia, serif;
+      font-size: 28px;
+    }
+
+    .footer-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.86);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      z-index: 100;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      position: relative;
+      width: min(1200px, 96vw);
+      max-height: 92vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      background: #09090d;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 100px rgba(0,0,0,0.6);
+    }
+
+    .lightbox-media {
+      display: grid;
+      place-items: center;
+      background: #060609;
+      min-height: 60vh;
+    }
+
+    .lightbox-media img {
+      max-width: 100%;
+      max-height: 90vh;
+      display: block;
+    }
+
+    .lightbox-side {
+      border-left: 1px solid rgba(255,255,255,0.08);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .lightbox-side h4 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-family: Georgia, serif;
+    }
+
+    .lightbox-side p,
+    .lightbox-side li {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .lightbox-side ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .lightbox-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .lightbox-btn, .close-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      padding: 12px 16px;
+      cursor: pointer;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 3;
+      backdrop-filter: blur(12px);
+    }
+
+    .hidden-anchor {
+      position: relative;
+      top: -90px;
+      visibility: hidden;
+    }
+
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .masonry { column-count: 2; }
+      .hero-stage {
+        min-height: auto;
+        grid-template-columns: 1fr;
+      }
+      .lightbox-inner { grid-template-columns: 1fr; max-height: 95vh; }
+      .lightbox-side { border-left: 0; border-top: 1px solid rgba(255,255,255,0.08); }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner, .hero, .section, .footer { padding-left: 16px; padding-right: 16px; }
+      .hero-stage { grid-template-columns: 1fr; }
+      .orbit-card { min-height: auto; }
+      .orbit-card img { height: 94px; }
+      .masonry { column-count: 1; }
+    }
+  </style>
+</head>
+<body class="grain">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="brand-dot"></span> Bronali Portfolio</div>
+      <div class="nav" id="navButtons"></div>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Creative Fashion Portfolio</div>
+        <h1><span class="accent-name">Bronali</span><br/>in motion.</h1>
+        <p class="hero-sub">
+          I am Bronali Manthena, a fashion design student drawn to elegance, femininity, and refined silhouettes. My work explores timeless aesthetics with a modern sensibility, inspired by the artistry and sophistication of luxury fashion. For me, fashion is a form of storytelling where creativity, craftsmanship, and personal expression come together.
+        </p>
+        <div class="profile-block">
+          <div class="profile-card">
+            <h3>Institute</h3>
+            <p>Dhruva College of Design</p>
+          </div>
+          <div class="profile-card">
+            <h3>Interests</h3>
+            <div class="interest-list">
+              <div class="meta-pill">Fashion illustration</div>
+              <div class="meta-pill">Designing</div>
+              <div class="meta-pill">Styling</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-meta" id="heroMeta"></div>
+        <div class="hero-actions">
+          <a class="cta" href="#portfolio-section">Explore portfolio</a>
+          <a class="cta secondary" href="#footer-note">View categories</a>
+        </div>
+      </div>
+
+      <div class="hero-stage" id="heroStage">
+        <div class="orbit-column" id="orbitLeft"></div>
+        <div class="centerpiece">
+          <div class="center-label">
+            <span class="small">Bronali Core</span>
+            <div class="big">Bronali</div>
+            <div class="desc">Elegance, femininity, refined silhouettes, and modern luxury-inspired storytelling.</div>
+          </div>
+        </div>
+        <div class="orbit-column" id="orbitRight"></div>
+      </div>
+    </section>
+
+    <div class="hidden-anchor" id="portfolio-section"></div>
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Selected creative folders</h2>
+          <p>Each folder is presented as a clean visual gallery to highlight Bronali's creative range in a polished and uniform way.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <aside class="sidebar">
+          <h3>Folders</h3>
+          <div class="folder-list" id="folderList"></div>
+        </aside>
+
+        <div class="gallery-shell" id="galleryShell"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer-note">
+    <div class="footer-box">
+      <div>
+        <h3>Bronali — Fashion Portfolio</h3>
+        <p>A curated presentation of illustrations, textile explorations, process work, and visual storytelling shaped by elegance and refined design.</p>
+      </div>
+      <a class="cta" href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="close-btn" id="closeLightbox">Close</button>
+      <div class="lightbox-media"><img id="lightboxImg" alt="Portfolio preview" /></div>
+      <div class="lightbox-side">
+        <div>
+          <h4 id="lightboxTitle">Bronali</h4>
+          <p id="lightboxText"></p>
+          <ul>
+            <li id="lightboxIndex"></li>
+            <li id="lightboxFolder"></li>
+            <li>Editorial portfolio layout with full-screen preview.</li>
+          </ul>
+        </div>
+        <div class="lightbox-actions">
+          <button class="lightbox-btn" id="prevBtn">Previous</button>
+          <button class="lightbox-btn" id="nextBtn">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const portfolioData = [
+      {
+        name: "Design Process",
+        description: "Concept development, ideation, and the working evolution behind finished pieces.",
+        images: ["bunny_fd/Design%20Process/1.JPG","bunny_fd/Design%20Process/2.JPG","bunny_fd/Design%20Process/3.JPG","bunny_fd/Design%20Process/4.JPG","bunny_fd/Design%20Process/5.JPG","bunny_fd/Design%20Process/6.JPG"]
+      },
+      {
+        name: "Digital illustrations",
+        description: "Digitally developed artworks with expressive form, texture, and stylized fashion energy.",
+        images: ["bunny_fd/Digital%20illustrations/1.JPG","bunny_fd/Digital%20illustrations/2.JPG","bunny_fd/Digital%20illustrations/3.JPG","bunny_fd/Digital%20illustrations/4.JPG","bunny_fd/Digital%20illustrations/5.jpeg","bunny_fd/Digital%20illustrations/6.jpeg","bunny_fd/Digital%20illustrations/7.jpeg","bunny_fd/Digital%20illustrations/8.jpeg"]
+      },
+      {
+        name: "Textile Designs",
+        description: "Surface explorations and textile-driven visual compositions shaped for fashion storytelling.",
+        images: ["bunny_fd/Textile%20Designs/1.JPG","bunny_fd/Textile%20Designs/2.jpg","bunny_fd/Textile%20Designs/3.JPG","bunny_fd/Textile%20Designs/4.JPG","bunny_fd/Textile%20Designs/5.jpg","bunny_fd/Textile%20Designs/6.JPG","bunny_fd/Textile%20Designs/7.JPG","bunny_fd/Textile%20Designs/8.JPG"]
+      },
+      {
+        name: "fabric paintings",
+        description: "Hand-touched fabric art pieces that merge fashion sensitivity with painterly expression.",
+        images: ["bunny_fd/fabric%20paintings/1.JPG","bunny_fd/fabric%20paintings/2.JPG"]
+      },
+      {
+        name: "fashion illustrations",
+        description: "Stylized fashion figures and visual narratives focused on silhouette, mood, and editorial presence.",
+        images: ["bunny_fd/fashion%20illustrations/1.jpg","bunny_fd/fashion%20illustrations/2.jpg","bunny_fd/fashion%20illustrations/3.jpg","bunny_fd/fashion%20illustrations/4.JPG","bunny_fd/fashion%20illustrations/5.JPG"]
+      },
+      {
+        name: "illustrations",
+        description: "A broader illustration collection showing range in rendering, visual storytelling, and artistic voice.",
+        images: ["bunny_fd/illustrations/1.JPG","bunny_fd/illustrations/2.jpg","bunny_fd/illustrations/3.JPG"]
+      }
+    ];
+
+    const navButtons = document.getElementById('navButtons');
+    const folderList = document.getElementById('folderList');
+    const galleryShell = document.getElementById('galleryShell');
+    const heroStage = document.getElementById('heroStage');
+    const orbitLeft = document.getElementById('orbitLeft');
+    const orbitRight = document.getElementById('orbitRight');
+    const heroMeta = document.getElementById('heroMeta');
+
+    let currentCategory = 0;
+    let currentImageIndex = 0;
+
+    function createNav() {
+      portfolioData.forEach((category, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = category.name;
+        btn.addEventListener('click', () => activateCategory(idx, true));
+        navButtons.appendChild(btn);
+      });
+    }
+
+    function createHeroMeta() {
+      const totalImages = portfolioData.reduce((sum, item) => sum + item.images.length, 0);
+      const meta = [
+        `Bronali Manthena`,
+        `Dhruva College of Design`,
+        `${totalImages} portfolio images`
+      ];
+      meta.forEach(item => {
+        const pill = document.createElement('div');
+        pill.className = 'meta-pill';
+        pill.textContent = item;
+        heroMeta.appendChild(pill);
+      });
+    }
+
+    function createOrbitCards() {
+      portfolioData.forEach((category, idx) => {
+        const card = document.createElement('div');
+        card.className = 'orbit-card';
+        card.innerHTML = `
+          <img src="${category.images[0]}" alt="${category.name}" loading="lazy" />
+          <div class="title">${category.name}</div>
+          <div class="count">${category.images.length} images</div>
+        `;
+        card.addEventListener('click', () => activateCategory(idx, true));
+        (idx < Math.ceil(portfolioData.length / 2) ? orbitLeft : orbitRight).appendChild(card);
+      });
+    }
+
+    function createSidebar() {
+      portfolioData.forEach((category, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'folder-btn';
+        btn.innerHTML = `${category.name}<span>${category.images.length} visuals</span>`;
+        btn.addEventListener('click', () => activateCategory(idx, false));
+        folderList.appendChild(btn);
+      });
+    }
+
+    function createGalleries() {
+      portfolioData.forEach((category, categoryIndex) => {
+        const panel = document.createElement('section');
+        panel.className = 'category-panel';
+        panel.innerHTML = `
+          <div class="category-meta">
+            <div>
+              <h3>${category.name}</h3>
+              <p>${category.description}</p>
+            </div>
+            <div class="image-count">${category.images.length} images</div>
+          </div>
+          <div class="masonry"></div>
+        `;
+
+        const masonry = panel.querySelector('.masonry');
+        category.images.forEach((image, imageIndex) => {
+          const card = document.createElement('article');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${image}" alt="${category.name} image ${imageIndex + 1}" loading="lazy" />
+            <div class="card-caption">
+              <strong>${category.name}</strong>
+              <span>${String(imageIndex + 1).padStart(2, '0')}</span>
+            </div>
+          `;
+          card.addEventListener('click', () => openLightbox(categoryIndex, imageIndex));
+          masonry.appendChild(card);
+        });
+
+        galleryShell.appendChild(panel);
+      });
+    }
+
+    function activateCategory(index, scrollIntoView) {
+      currentCategory = index;
+      document.querySelectorAll('.folder-btn').forEach((btn, i) => btn.classList.toggle('active', i === index));
+      document.querySelectorAll('.nav button').forEach((btn, i) => btn.classList.toggle('active', i === index));
+      document.querySelectorAll('.category-panel').forEach((panel, i) => panel.classList.toggle('active', i === index));
+      if (scrollIntoView) {
+        document.getElementById('portfolio-section').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxText = document.getElementById('lightboxText');
+    const lightboxIndex = document.getElementById('lightboxIndex');
+    const lightboxFolder = document.getElementById('lightboxFolder');
+    const closeLightbox = document.getElementById('closeLightbox');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function openLightbox(categoryIndex, imageIndex) {
+      currentCategory = categoryIndex;
+      currentImageIndex = imageIndex;
+      updateLightbox();
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightbox() {
+      const category = portfolioData[currentCategory];
+      const imagePath = category.images[currentImageIndex];
+      lightboxImg.src = imagePath;
+      lightboxTitle.textContent = 'Bronali';
+      lightboxText.textContent = category.description;
+      lightboxIndex.textContent = `Image ${currentImageIndex + 1} of ${category.images.length}`;
+      lightboxFolder.textContent = `Folder: ${category.name}`;
+    }
+
+    function closeModal() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function moveLightbox(step) {
+      const category = portfolioData[currentCategory];
+      currentImageIndex = (currentImageIndex + step + category.images.length) % category.images.length;
+      updateLightbox();
+    }
+
+    closeLightbox.addEventListener('click', closeModal);
+    prevBtn.addEventListener('click', () => moveLightbox(-1));
+    nextBtn.addEventListener('click', () => moveLightbox(1));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeModal(); });
+    window.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') moveLightbox(-1);
+      if (e.key === 'ArrowRight') moveLightbox(1);
+    });
+
+    createNav();
+    createHeroMeta();
+    createOrbitCards();
+    createSidebar();
+    createGalleries();
+    activateCategory(0, false);
+  </script>
+</body>
+</html>
