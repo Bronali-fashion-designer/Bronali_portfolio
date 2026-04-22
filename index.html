@@ -1,1440 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bronali — Fashion Portfolio</title>
-  <style>
-    :root {
-      --bg: #090909;
-      --bg-soft: #111111;
-      --panel: rgba(255,255,255,0.05);
-      --panel-2: rgba(255,255,255,0.08);
-      --line: rgba(255,255,255,0.12);
-      --text: #f6f0e8;
-      --muted: #c7bfb5;
-      --soft: #a89c90;
-      --gold: #dbc0a3;
-      --gold-2: #c4976d;
-      --shadow: 0 30px 80px rgba(0,0,0,0.45);
-      --radius: 28px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 20% 20%, rgba(196,151,109,0.12), transparent 24%),
-        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.06), transparent 18%),
-        linear-gradient(180deg, #060606 0%, #0d0c0c 40%, #090909 100%);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.05;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-      background-size: 22px 22px;
-      mask-image: radial-gradient(circle at center, black 55%, transparent 100%);
-      z-index: 100;
-    }
-
-    img { max-width: 100%; display: block; }
-    a { color: inherit; }
-
-    .topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 50;
-      backdrop-filter: blur(18px);
-      background: rgba(6, 6, 6, 0.45);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .topbar-inner {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .brand-mark {
-      width: 11px;
-      height: 11px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-2));
-      box-shadow: 0 0 20px rgba(196,151,109,0.6);
-    }
-
-    .topnav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .topnav a, .topnav button {
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-size: 12px;
-      cursor: pointer;
-      transition: 220ms ease;
-    }
-
-    .topnav a:hover, .topnav button:hover, .topnav button.active {
-      transform: translateY(-1px);
-      border-color: rgba(219,192,163,0.34);
-      background: linear-gradient(135deg, rgba(219,192,163,0.18), rgba(196,151,109,0.12));
-    }
-
-    .hero {
-      min-height: 100vh;
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 104px 24px 48px;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-left, .hero-right { min-width: 0; }
-
-    .intro-card {
-      height: 100%;
-      border-radius: 38px;
-      padding: 36px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
-        radial-gradient(circle at top left, rgba(219,192,163,0.16), transparent 30%);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .intro-card::after {
-      content: "";
-      position: absolute;
-      inset: 16px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.08);
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.28em;
-      color: var(--muted);
-      font-size: 11px;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(56px, 10vw, 122px);
-      line-height: 0.9;
-      letter-spacing: -0.05em;
-      margin: 0;
-    }
-
-    .accent {
-      background: linear-gradient(135deg, #fffaf3 0%, #e6c7aa 46%, #c4976d 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .intro-copy {
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.9;
-      max-width: 680px;
-      margin: 26px 0 0;
-    }
-
-    .hero-meta {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 30px;
-    }
-
-    .stat {
-      padding: 18px;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 26px;
-      font-family: Georgia, serif;
-      margin-bottom: 6px;
-      color: #fff7f0;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 26px;
-    }
-
-    .cta {
-      text-decoration: none;
-      border-radius: 999px;
-      padding: 14px 18px;
-      font-weight: 600;
-      border: 1px solid rgba(219,192,163,0.24);
-      background: linear-gradient(135deg, rgba(219,192,163,0.16), rgba(196,151,109,0.12));
-      transition: 220ms ease;
-    }
-
-    .cta.secondary {
-      background: rgba(255,255,255,0.03);
-      border-color: rgba(255,255,255,0.1);
-    }
-
-    .cta:hover { transform: translateY(-2px); }
-
-    .hero-right {
-      display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: 20px;
-    }
-
-    .portrait-stage {
-      min-height: 560px;
-      border-radius: 38px;
-      overflow: hidden;
-      position: relative;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: var(--shadow);
-      background: #0d0b0b;
-      isolation: isolate;
-    }
-
-    .portrait-stage img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(0.95) contrast(1.03) brightness(0.82);
-      transform: scale(1.03);
-      transition: transform 900ms ease;
-    }
-
-    .portrait-stage:hover img { transform: scale(1.08); }
-
-    .portrait-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.52)),
-        linear-gradient(90deg, rgba(6,6,6,0.75), rgba(6,6,6,0.08));
-    }
-
-    .signature-card {
-      position: absolute;
-      left: 26px;
-      right: 26px;
-      bottom: 24px;
-      padding: 22px;
-      border-radius: 28px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(9,9,9,0.44);
-      backdrop-filter: blur(18px);
-    }
-
-    .signature-card small {
-      display: block;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 10px;
-      margin-bottom: 10px;
-    }
-
-    .signature-card h2 {
-      margin: 0 0 12px;
-      font-family: Georgia, serif;
-      font-size: clamp(34px, 4vw, 52px);
-      letter-spacing: -0.04em;
-    }
-
-    .signature-card p {
-      margin: 0;
-      color: #e6ddd4;
-      line-height: 1.85;
-      font-size: 15px;
-    }
-
-    .uniform-windows {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .window {
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 18px;
-      min-height: 148px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
-      box-shadow: var(--shadow);
-      transition: transform 260ms ease, border-color 260ms ease;
-    }
-
-    .window:hover {
-      transform: translateY(-4px);
-      border-color: rgba(219,192,163,0.3);
-    }
-
-    .window .label {
-      color: var(--soft);
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 10px;
-      margin-bottom: 10px;
-    }
-
-    .window .value {
-      font-family: Georgia, serif;
-      font-size: 28px;
-      margin: 0 0 10px;
-      line-height: 1;
-    }
-
-    .window p, .window ul {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 14px;
-    }
-
-    .window ul {
-      padding-left: 16px;
-    }
-
-    .section {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 30px 24px 110px;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: end;
-      margin-bottom: 26px;
-      flex-wrap: wrap;
-    }
-
-    .section-head h3 {
-      margin: 0;
-      font-family: Georgia, serif;
-      font-size: clamp(32px, 5vw, 52px);
-      letter-spacing: -0.04em;
-    }
-
-    .section-head p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      max-width: 700px;
-      line-height: 1.8;
-    }
-
-    .folder-rail {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 14px;
-      margin-bottom: 26px;
-    }
-
-    .folder-chip {
-      text-align: left;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      border-radius: 24px;
-      padding: 16px;
-      cursor: pointer;
-      transition: 220ms ease;
-      min-height: 102px;
-    }
-
-    .folder-chip strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-
-    .folder-chip span {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .folder-chip.active, .folder-chip:hover {
-      transform: translateY(-3px);
-      border-color: rgba(219,192,163,0.32);
-      background: linear-gradient(135deg, rgba(219,192,163,0.18), rgba(196,151,109,0.10));
-    }
-
-    .feature-stage {
-      display: none;
-      animation: reveal 700ms ease both;
-    }
-
-    .feature-stage.active { display: block; }
-
-    @keyframes reveal {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .stage-shell {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 22px;
-      align-items: stretch;
-    }
-
-    .fullscreen-view {
-      min-height: 78vh;
-      border-radius: 34px;
-      overflow: hidden;
-      position: relative;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: #0a0a0a;
-      box-shadow: var(--shadow);
-    }
-
-    .fullscreen-view img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 800ms ease, opacity 500ms ease;
-    }
-
-    .fullscreen-view:hover img { transform: scale(1.03); }
-
-    .fullscreen-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 26px;
-      background: linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.52));
-    }
-
-    .view-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: start;
-      flex-wrap: wrap;
-    }
-
-    .view-tag, .counter-pill {
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 12px;
-      background: rgba(10,10,10,0.42);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(12px);
-    }
-
-    .view-bottom h4 {
-      margin: 0;
-      font-family: Georgia, serif;
-      font-size: clamp(36px, 4vw, 56px);
-      letter-spacing: -0.04em;
-    }
-
-    .view-bottom p {
-      margin: 10px 0 0;
-      max-width: 620px;
-      color: #e0d6cc;
-      line-height: 1.8;
-      font-size: 15px;
-    }
-
-    .side-stack {
-      display: grid;
-      grid-template-rows: auto auto 1fr;
-      gap: 18px;
-    }
-
-    .info-panel, .thumb-strip, .quote-panel {
-      border-radius: 28px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
-      box-shadow: var(--shadow);
-    }
-
-    .info-panel {
-      padding: 24px;
-    }
-
-    .info-panel small {
-      display: block;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--soft);
-      font-size: 10px;
-      margin-bottom: 10px;
-    }
-
-    .info-panel h5 {
-      margin: 0 0 10px;
-      font-family: Georgia, serif;
-      font-size: 32px;
-      letter-spacing: -0.03em;
-    }
-
-    .info-panel p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.85;
-    }
-
-    .thumb-strip {
-      padding: 14px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .thumb {
-      position: relative;
-      aspect-ratio: 0.8;
-      border-radius: 18px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: 220ms ease;
-    }
-
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .thumb.active, .thumb:hover {
-      transform: translateY(-2px);
-      border-color: rgba(219,192,163,0.45);
-    }
-
-    .quote-panel {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-      min-height: 200px;
-    }
-
-    .quote-panel p {
-      margin: 0;
-      font-family: Georgia, serif;
-      font-size: 28px;
-      line-height: 1.4;
-      letter-spacing: -0.03em;
-      color: #f9f3eb;
-    }
-
-    .quote-panel span {
-      color: var(--soft);
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 11px;
-    }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    .controls button {
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      padding: 11px 16px;
-      cursor: pointer;
-      transition: 220ms ease;
-    }
-
-    .controls button:hover {
-      border-color: rgba(219,192,163,0.36);
-      background: rgba(219,192,163,0.09);
-    }
-
-    .board-grid {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .board-copy {
-      padding: 28px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
-      box-shadow: var(--shadow);
-      position: sticky;
-      top: 86px;
-    }
-
-    .board-copy h4 {
-      margin: 0 0 12px;
-      font-family: Georgia, serif;
-      font-size: 42px;
-      letter-spacing: -0.04em;
-    }
-
-    .board-copy p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.9;
-    }
-
-    .board-copy .controls { margin-top: 20px; }
-
-    .mood-board {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-auto-rows: 96px;
-      gap: 14px;
-    }
-
-    .board-tile {
-      border-radius: 26px;
-      overflow: hidden;
-      position: relative;
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: var(--shadow);
-      cursor: pointer;
-      transform: translateY(24px);
-      opacity: 0;
-      transition: transform 700ms ease, opacity 700ms ease, border-color 220ms ease;
-    }
-
-    .board-tile.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .board-tile:hover { border-color: rgba(219,192,163,0.34); }
-
-    .board-tile img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 700ms ease;
-    }
-
-    .board-tile:hover img { transform: scale(1.05); }
-
-    .span-4x4 { grid-column: span 4; grid-row: span 4; }
-    .span-5x3 { grid-column: span 5; grid-row: span 3; }
-    .span-3x3 { grid-column: span 3; grid-row: span 3; }
-    .span-7x4 { grid-column: span 7; grid-row: span 4; }
-    .span-6x3 { grid-column: span 6; grid-row: span 3; }
-    .span-6x4 { grid-column: span 6; grid-row: span 4; }
-
-    .board-badge {
-      position: absolute;
-      left: 14px;
-      bottom: 14px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(8,8,8,0.52);
-      border: 1px solid rgba(255,255,255,0.14);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      backdrop-filter: blur(12px);
-    }
-
-    .section-divider {
-      margin-top: 100px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .editorial-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 22px;
-    }
-
-    .editorial-main, .editorial-side {
-      border-radius: 34px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
-      box-shadow: var(--shadow);
-    }
-
-    .editorial-main {
-      min-height: 82vh;
-      position: relative;
-    }
-
-    .editorial-main img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 850ms ease;
-    }
-
-    .editorial-main:hover img { transform: scale(1.03); }
-
-    .editorial-note {
-      position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 24px;
-      padding: 22px;
-      border-radius: 26px;
-      background: rgba(10,10,10,0.48);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .editorial-note h4 {
-      margin: 0 0 10px;
-      font-family: Georgia, serif;
-      font-size: 42px;
-      letter-spacing: -0.04em;
-    }
-
-    .editorial-note p {
-      margin: 0;
-      color: #e4dbd2;
-      line-height: 1.85;
-    }
-
-    .editorial-side {
-      padding: 16px;
-      display: grid;
-      gap: 14px;
-      grid-template-rows: repeat(3, 1fr);
-    }
-
-    .editorial-thumb {
-      border-radius: 24px;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-      border: 1px solid rgba(255,255,255,0.08);
-      transition: 220ms ease;
-    }
-
-    .editorial-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .editorial-thumb:hover { transform: translateY(-2px); border-color: rgba(219,192,163,0.34); }
-
-    .editorial-thumb span {
-      position: absolute;
-      left: 14px;
-      bottom: 14px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      padding: 9px 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(8,8,8,0.42);
-      backdrop-filter: blur(10px);
-    }
-
-    .footer {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 0 24px 80px;
-    }
-
-    .footer-box {
-      border-radius: 34px;
-      padding: 28px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(135deg, rgba(219,192,163,0.12), rgba(255,255,255,0.04));
-      box-shadow: var(--shadow);
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .footer-box h4 {
-      margin: 0 0 8px;
-      font-family: Georgia, serif;
-      font-size: 34px;
-      letter-spacing: -0.04em;
-    }
-
-    .footer-box p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 720px;
-    }
-
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 120;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: rgba(0,0,0,0.84);
-      backdrop-filter: blur(12px);
-    }
-
-    .lightbox.open { display: flex; }
-
-    .lightbox-shell {
-      width: min(1440px, 96vw);
-      max-height: 94vh;
-      border-radius: 34px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: #080808;
-      box-shadow: 0 30px 120px rgba(0,0,0,0.65);
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-    }
-
-    .lightbox-media {
-      min-height: 72vh;
-      background: #060606;
-      display: grid;
-      place-items: center;
-    }
-
-    .lightbox-media img {
-      max-width: 100%;
-      max-height: 92vh;
-      object-fit: contain;
-    }
-
-    .lightbox-side {
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 20px;
-      border-left: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .lightbox-side small {
-      display: block;
-      text-transform: uppercase;
-      letter-spacing: 0.24em;
-      color: var(--soft);
-      font-size: 10px;
-      margin-bottom: 10px;
-    }
-
-    .lightbox-side h5 {
-      margin: 0 0 10px;
-      font-family: Georgia, serif;
-      font-size: 42px;
-      letter-spacing: -0.04em;
-    }
-
-    .lightbox-side p, .lightbox-side li {
-      color: var(--muted);
-      line-height: 1.85;
-    }
-
-    .lightbox-side ul { margin: 0; padding-left: 18px; }
-
-    .lb-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .lb-actions button {
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      padding: 12px 16px;
-      cursor: pointer;
-    }
-
-    .close {
-      position: absolute;
-      top: 18px;
-      right: 18px;
-      z-index: 4;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(8,8,8,0.45);
-      color: var(--text);
-      padding: 11px 15px;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-    }
-
-    .hidden-anchor {
-      position: relative;
-      top: -90px;
-      visibility: hidden;
-    }
-
-    @media (max-width: 1200px) {
-      .hero, .stage-shell, .board-grid, .editorial-grid, .lightbox-shell { grid-template-columns: 1fr; }
-      .folder-rail { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .uniform-windows, .hero-meta { grid-template-columns: 1fr; }
-      .board-copy { position: static; }
-      .thumb-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      .lightbox-side { border-left: 0; border-top: 1px solid rgba(255,255,255,0.08); }
-    }
-
-    @media (max-width: 820px) {
-      .topbar-inner, .hero, .section, .footer { padding-left: 16px; padding-right: 16px; }
-      .hero { padding-top: 92px; }
-      .folder-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .mood-board { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
-      .span-4x4, .span-5x3, .span-3x3, .span-7x4, .span-6x3, .span-6x4 { grid-column: span 1; grid-row: span 1; }
-      .thumb-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .signature-card { left: 16px; right: 16px; bottom: 16px; }
-      .portrait-stage { min-height: 480px; }
-      .fullscreen-view, .editorial-main { min-height: 60vh; }
-      .quote-panel p { font-size: 22px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bronali Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #0a0a0a;
+  color: white;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 80px;
+  letter-spacing: 5px;
+}
+
+.hero p {
+  width: 60%;
+  line-height: 1.7;
+  opacity: 0.8;
+}
+
+/* SECTION */
+.section {
+  padding: 80px 10%;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 20px;
+}
+
+.grid img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.grid img:hover {
+  transform: scale(1.05);
+}
+
+/* EDITORIAL */
+.editorial {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 15px;
+}
+
+.editorial .big {
+  grid-row: span 2;
+}
+
+.editorial img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.editorial img:hover {
+  transform: scale(1.05);
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.95);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.lightbox img {
+  max-width:90%;
+  max-height:90%;
+}
+
+/* BRONALI CORE */
+.core {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+
+.card {
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+}
+</style>
 </head>
-<body id="top">
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand"><span class="brand-mark"></span> Bronali · Fashion Portfolio</div>
-      <div class="topnav" id="topNav">
-        <a href="#portfolio">Portfolio</a>
-        <a href="#illustration-section">Illustration Edit</a>
-        <a href="#footer-end">Contact View</a>
-      </div>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>BRONALI</h1>
+  <p>
+    I am Bronali Manthena, a fashion design student drawn to elegance,
+    femininity, and refined silhouettes. My work explores timeless aesthetics
+    with a modern sensibility, inspired by the artistry and sophistication of luxury fashion.
+    <br><br>
+    For me, fashion is a form of storytelling where creativity, craftsmanship,
+    and personal expression come together.
+  </p>
+</section>
+
+<!-- CORE -->
+<section class="section">
+  <h2 class="section-title">Bronali Core</h2>
+
+  <div class="core">
+    <div class="card">
+      <h3>Education</h3>
+      <p>Dhruva College of Design</p>
+    </div>
+
+    <div class="card">
+      <h3>Interests</h3>
+      <p>Fashion Illustration<br>Designing<br>Styling</p>
+    </div>
+
+    <div class="card">
+      <h3>Vision</h3>
+      <p>Luxury aesthetics, feminine silhouettes, and timeless design storytelling.</p>
     </div>
   </div>
+</section>
 
-  <main>
-    <section class="hero">
-      <div class="hero-left">
-        <div class="intro-card">
-          <div>
-            <div class="eyebrow">Fashion Design Portfolio</div>
-            <h1><span class="accent">Bronali</span><br>Manthena</h1>
-            <p class="intro-copy">
-              I am Bronali Manthena, a fashion design student drawn to elegance, femininity, and refined silhouettes. My work explores timeless aesthetics with a modern sensibility, inspired by the artistry and sophistication of luxury fashion. For me, fashion is a form of storytelling where creativity, craftsmanship, and personal expression come together.
-            </p>
-            <div class="hero-meta" id="heroMeta"></div>
-            <div class="hero-actions">
-              <a class="cta" href="#portfolio">Enter portfolio</a>
-              <a class="cta secondary" href="#illustration-section">View illustration stories</a>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- LOOKS -->
+<section class="section">
+  <h2 class="section-title">Design Looks</h2>
 
-      <div class="hero-right">
-        <div class="portrait-stage" id="portraitStage">
-          <img id="heroImage" src="bunny_fd/fashion%20illustrations/1.jpg" alt="Bronali fashion portfolio hero image">
-          <div class="portrait-overlay"></div>
-          <div class="signature-card">
-            <small>Bronali Core</small>
-            <h2>Editorial elegance with a modern voice.</h2>
-            <p>
-              A curated portfolio built like a luxury fashion site — cinematic galleries, runway-style transitions, mood-board layouts, and immersive illustration stories.
-            </p>
-          </div>
-        </div>
-
-        <div class="uniform-windows">
-          <div class="window">
-            <div class="label">Education</div>
-            <div class="value">Dhruva</div>
-            <p>Dhruva College of Design</p>
-          </div>
-          <div class="window">
-            <div class="label">Interests</div>
-            <div class="value">Creative</div>
-            <ul>
-              <li>Fashion illustration</li>
-              <li>Designing</li>
-              <li>Styling</li>
-            </ul>
-          </div>
-          <div class="window">
-            <div class="label">Signature</div>
-            <div class="value">Refined</div>
-            <p>Elegance, femininity, craftsmanship, and storytelling shaped into contemporary silhouettes.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="hidden-anchor" id="portfolio"></div>
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h3>Curated fashion archive</h3>
-          <p>
-            Each folder becomes a polished visual chapter with Dior-inspired spaciousness, Vogue-like editorial rhythm, and smooth runway-style transitions between images.
-          </p>
-        </div>
-      </div>
-
-      <div class="folder-rail" id="folderRail"></div>
-      <div id="featureStages"></div>
-
-      <div class="section-divider" id="illustration-section"></div>
-      <div class="section-head">
-        <div>
-          <h3>Illustration edit</h3>
-          <p>
-            A dedicated editorial section that treats selected works like a fashion magazine spread — large format visuals, supporting frames, and clean cinematic transitions.
-          </p>
-        </div>
-      </div>
-
-      <div class="editorial-grid">
-        <div class="editorial-main" id="editorialMain">
-          <img id="editorialMainImg" src="bunny_fd/illustrations/1.JPG" alt="Editorial fashion illustration feature">
-          <div class="editorial-note">
-            <h4 id="editorialTitle">Illustrations</h4>
-            <p id="editorialText">A broader illustration collection showing range in rendering, visual storytelling, and artistic voice.</p>
-            <div class="controls">
-              <button id="editorialPrev">Previous</button>
-              <button id="editorialNext">Next</button>
-              <button id="editorialOpen">Open fullscreen</button>
-            </div>
-          </div>
-        </div>
-        <div class="editorial-side" id="editorialSide"></div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer" id="footer-end">
-    <div class="footer-box">
-      <div>
-        <h4>Bronali — Portfolio in couture form</h4>
-        <p>
-          Crafted as a luxury digital portfolio with fullscreen image experiences, board-style layouts, elegant transitions, and a refined fashion presentation made for college reviews, internships, and professional sharing.
-        </p>
-      </div>
-      <a href="#top" class="cta">Back to top</a>
-    </div>
-  </footer>
-
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox-shell">
-      <button class="close" id="lbClose">Close</button>
-      <div class="lightbox-media">
-        <img id="lbImg" alt="Bronali portfolio fullscreen preview">
-      </div>
-      <div class="lightbox-side">
-        <div>
-          <small>Bronali Portfolio</small>
-          <h5 id="lbTitle">Bronali</h5>
-          <p id="lbText"></p>
-          <ul>
-            <li id="lbIndex"></li>
-            <li id="lbFolder"></li>
-            <li>Luxury fashion portfolio presentation with cinematic transitions.</li>
-          </ul>
-        </div>
-        <div class="lb-actions">
-          <button id="lbPrev">Previous</button>
-          <button id="lbNext">Next</button>
-        </div>
-      </div>
-    </div>
+  <div class="grid">
+    <img src="look1/img1.jpg" onclick="openLightbox(this.src)">
+    <img src="look1/img2.jpg" onclick="openLightbox(this.src)">
+    <img src="look2/img1.jpg" onclick="openLightbox(this.src)">
+    <img src="look2/img2.jpg" onclick="openLightbox(this.src)">
   </div>
+</section>
 
-  <script>
-    const portfolioData = [
-      {
-        name: "Design Process",
-        description: "Concept development, ideation, and the working evolution behind finished pieces.",
-        type: "board",
-        images: ["bunny_fd/Design%20Process/1.JPG","bunny_fd/Design%20Process/2.JPG","bunny_fd/Design%20Process/3.JPG","bunny_fd/Design%20Process/4.JPG","bunny_fd/Design%20Process/5.JPG","bunny_fd/Design%20Process/6.JPG"]
-      },
-      {
-        name: "Digital illustrations",
-        description: "Digitally developed artworks with expressive form, texture, and stylized fashion energy.",
-        type: "fullscreen",
-        images: ["bunny_fd/Digital%20illustrations/1.JPG","bunny_fd/Digital%20illustrations/2.JPG","bunny_fd/Digital%20illustrations/3.JPG","bunny_fd/Digital%20illustrations/4.JPG","bunny_fd/Digital%20illustrations/5.jpeg","bunny_fd/Digital%20illustrations/6.jpeg","bunny_fd/Digital%20illustrations/7.jpeg","bunny_fd/Digital%20illustrations/8.jpeg"]
-      },
-      {
-        name: "Textile Designs",
-        description: "Surface explorations and textile-driven visual compositions shaped for fashion storytelling.",
-        type: "board",
-        images: ["bunny_fd/Textile%20Designs/1.JPG","bunny_fd/Textile%20Designs/2.jpg","bunny_fd/Textile%20Designs/3.JPG","bunny_fd/Textile%20Designs/4.JPG","bunny_fd/Textile%20Designs/5.jpg","bunny_fd/Textile%20Designs/6.JPG","bunny_fd/Textile%20Designs/7.JPG","bunny_fd/Textile%20Designs/8.JPG"]
-      },
-      {
-        name: "Fabric Paintings",
-        description: "Hand-touched fabric art pieces that merge fashion sensitivity with painterly expression.",
-        type: "fullscreen",
-        images: ["bunny_fd/fabric%20paintings/1.JPG","bunny_fd/fabric%20paintings/2.JPG"]
-      },
-      {
-        name: "Fashion Illustrations",
-        description: "Stylized fashion figures and visual narratives focused on silhouette, mood, and editorial presence.",
-        type: "fullscreen",
-        images: ["bunny_fd/fashion%20illustrations/1.jpg","bunny_fd/fashion%20illustrations/2.jpg","bunny_fd/fashion%20illustrations/3.jpg","bunny_fd/fashion%20illustrations/4.JPG","bunny_fd/fashion%20illustrations/5.JPG"]
-      },
-      {
-        name: "Illustrations",
-        description: "A broader illustration collection showing range in rendering, visual storytelling, and artistic voice.",
-        type: "fullscreen",
-        images: ["bunny_fd/illustrations/1.JPG","bunny_fd/illustrations/2.jpg","bunny_fd/illustrations/3.JPG"]
-      }
-    ];
+<!-- CAPSULE COLLECTION -->
+<section class="section">
+  <h2 class="section-title">Capsule Collection</h2>
 
-    const heroMeta = document.getElementById('heroMeta');
-    const folderRail = document.getElementById('folderRail');
-    const featureStages = document.getElementById('featureStages');
-    const heroImage = document.getElementById('heroImage');
+  <div class="editorial">
+    <div class="big">
+      <img src="capsule-collection/img1.jpg" onclick="openLightbox(this.src)">
+    </div>
+    <div><img src="capsule-collection/img2.jpg" onclick="openLightbox(this.src)"></div>
+    <div><img src="capsule-collection/img3.jpg" onclick="openLightbox(this.src)"></div>
+    <div><img src="capsule-collection/img4.jpg" onclick="openLightbox(this.src)"></div>
+  </div>
+</section>
 
-    let activeCategory = 0;
-    let lightboxCategory = 0;
-    let lightboxIndex = 0;
+<!-- ILLUSTRATIONS -->
+<section class="section">
+  <h2 class="section-title">Illustrations</h2>
 
-    const totalImages = portfolioData.reduce((sum, item) => sum + item.images.length, 0);
-    const metaItems = [
-      { value: portfolioData.length, label: 'curated folders turned into luxury sections' },
-      { value: totalImages, label: 'portfolio visuals presented in editorial style' },
-      { value: 'Live', label: 'runway transitions, boards, and fullscreen viewing' }
-    ];
+  <div class="grid">
+    <img src="illustrations/img1.jpg" onclick="openLightbox(this.src)">
+    <img src="illustrations/img2.jpg" onclick="openLightbox(this.src)">
+    <img src="illustrations/img3.jpg" onclick="openLightbox(this.src)">
+  </div>
+</section>
 
-    metaItems.forEach(item => {
-      const node = document.createElement('div');
-      node.className = 'stat';
-      node.innerHTML = `<strong>${item.value}</strong><span>${item.label}</span>`;
-      heroMeta.appendChild(node);
-    });
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
 
-    function makeFolderRail() {
-      portfolioData.forEach((category, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'folder-chip';
-        btn.innerHTML = `<strong>${category.name}</strong><span>${category.images.length} visuals · ${category.type === 'board' ? 'fashion board layout' : 'fullscreen gallery'}</span>`;
-        btn.addEventListener('click', () => activateCategory(index, true));
-        folderRail.appendChild(btn);
-      });
-    }
+<script>
+function openLightbox(src){
+  document.getElementById("lightbox").style.display = "flex";
+  document.getElementById("lightbox-img").src = src;
+}
 
-    function boardClass(index) {
-      const classes = ['span-4x4', 'span-5x3', 'span-3x3', 'span-7x4', 'span-6x3', 'span-6x4'];
-      return classes[index % classes.length];
-    }
+function closeLightbox(){
+  document.getElementById("lightbox").style.display = "none";
+}
+</script>
 
-    function createBoardStage(category, categoryIndex) {
-      const stage = document.createElement('section');
-      stage.className = 'feature-stage';
-      const board = document.createElement('div');
-      board.className = 'board-grid';
-      board.innerHTML = `
-        <div class="board-copy">
-          <small class="eyebrow" style="margin-bottom:12px;display:block;">Fashion board layout</small>
-          <h4>${category.name}</h4>
-          <p>${category.description}</p>
-          <div class="controls">
-            <button data-cat="${categoryIndex}" data-mode="prev">Previous folder</button>
-            <button data-cat="${categoryIndex}" data-mode="next">Next folder</button>
-          </div>
-        </div>
-        <div class="mood-board"></div>
-      `;
-      const boardWrap = board.querySelector('.mood-board');
-      category.images.forEach((image, imageIndex) => {
-        const tile = document.createElement('article');
-        tile.className = `board-tile ${boardClass(imageIndex)}`;
-        tile.innerHTML = `<img src="${image}" alt="${category.name} ${imageIndex + 1}" loading="lazy"><div class="board-badge">${category.name}</div>`;
-        tile.addEventListener('click', () => openLightbox(categoryIndex, imageIndex));
-        boardWrap.appendChild(tile);
-        requestAnimationFrame(() => setTimeout(() => tile.classList.add('show'), 70 * imageIndex));
-      });
-      stage.appendChild(board);
-      return stage;
-    }
-
-    function createFullscreenStage(category, categoryIndex) {
-      const stage = document.createElement('section');
-      stage.className = 'feature-stage';
-      stage.innerHTML = `
-        <div class="stage-shell">
-          <div class="fullscreen-view">
-            <img id="feature-main-${categoryIndex}" src="${category.images[0]}" alt="${category.name} featured image">
-            <div class="fullscreen-overlay">
-              <div class="view-top">
-                <div class="view-tag">${category.name}</div>
-                <div class="counter-pill" id="counter-${categoryIndex}">01 / ${String(category.images.length).padStart(2, '0')}</div>
-              </div>
-              <div class="view-bottom">
-                <h4>${category.name}</h4>
-                <p>${category.description}</p>
-              </div>
-            </div>
-          </div>
-          <div class="side-stack">
-            <div class="info-panel">
-              <small>Runway transition gallery</small>
-              <h5>${category.name}</h5>
-              <p>${category.description}</p>
-              <div class="controls">
-                <button data-cat="${categoryIndex}" data-action="prev-slide">Previous</button>
-                <button data-cat="${categoryIndex}" data-action="next-slide">Next</button>
-                <button data-cat="${categoryIndex}" data-action="open-slide">Open fullscreen</button>
-              </div>
-            </div>
-            <div class="thumb-strip" id="thumbs-${categoryIndex}"></div>
-            <div class="quote-panel">
-              <p>“Fashion becomes memorable when image, silhouette, and atmosphere move together.”</p>
-              <span>Bronali visual archive</span>
-            </div>
-          </div>
-        </div>
-      `;
-
-      const thumbs = stage.querySelector(`#thumbs-${categoryIndex}`);
-      category.images.slice(0, 8).forEach((image, imageIndex) => {
-        const thumb = document.createElement('button');
-        thumb.className = 'thumb';
-        thumb.innerHTML = `<img src="${image}" alt="${category.name} thumbnail ${imageIndex + 1}" loading="lazy">`;
-        thumb.addEventListener('click', () => setFeatureImage(categoryIndex, imageIndex));
-        thumbs.appendChild(thumb);
-      });
-      return stage;
-    }
-
-    function buildStages() {
-      portfolioData.forEach((category, index) => {
-        const stage = category.type === 'board' ? createBoardStage(category, index) : createFullscreenStage(category, index);
-        featureStages.appendChild(stage);
-      });
-    }
-
-    const featureState = {};
-    portfolioData.forEach((_, i) => featureState[i] = 0);
-
-    function setFeatureImage(categoryIndex, imageIndex) {
-      featureState[categoryIndex] = imageIndex;
-      const img = document.getElementById(`feature-main-${categoryIndex}`);
-      if (!img) return;
-      img.style.opacity = '0.4';
-      img.style.transform = 'scale(1.04)';
-      setTimeout(() => {
-        img.src = portfolioData[categoryIndex].images[imageIndex];
-        img.style.opacity = '1';
-        img.style.transform = 'scale(1)';
-      }, 180);
-      const counter = document.getElementById(`counter-${categoryIndex}`);
-      if (counter) counter.textContent = `${String(imageIndex + 1).padStart(2, '0')} / ${String(portfolioData[categoryIndex].images.length).padStart(2, '0')}`;
-      document.querySelectorAll(`#thumbs-${categoryIndex} .thumb`).forEach((thumb, idx) => thumb.classList.toggle('active', idx === imageIndex));
-      if (activeCategory === categoryIndex) heroImage.src = portfolioData[categoryIndex].images[imageIndex];
-    }
-
-    function activateCategory(index, scroll) {
-      activeCategory = index;
-      document.querySelectorAll('.folder-chip').forEach((chip, i) => chip.classList.toggle('active', i === index));
-      document.querySelectorAll('.feature-stage').forEach((stage, i) => stage.classList.toggle('active', i === index));
-      heroImage.src = portfolioData[index].images[featureState[index] || 0];
-      if (document.getElementById(`feature-main-${index}`)) setFeatureImage(index, featureState[index] || 0);
-      if (scroll) document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    featureStages.addEventListener('click', (event) => {
-      const button = event.target.closest('button[data-action], button[data-mode]');
-      if (!button) return;
-      const categoryIndex = Number(button.dataset.cat);
-      if (button.dataset.mode === 'prev') activateCategory((categoryIndex - 1 + portfolioData.length) % portfolioData.length, true);
-      if (button.dataset.mode === 'next') activateCategory((categoryIndex + 1) % portfolioData.length, true);
-      if (button.dataset.action === 'prev-slide') {
-        const nextIndex = (featureState[categoryIndex] - 1 + portfolioData[categoryIndex].images.length) % portfolioData[categoryIndex].images.length;
-        setFeatureImage(categoryIndex, nextIndex);
-      }
-      if (button.dataset.action === 'next-slide') {
-        const nextIndex = (featureState[categoryIndex] + 1) % portfolioData[categoryIndex].images.length;
-        setFeatureImage(categoryIndex, nextIndex);
-      }
-      if (button.dataset.action === 'open-slide') {
-        openLightbox(categoryIndex, featureState[categoryIndex] || 0);
-      }
-    });
-
-    const editorialPool = [
-      { folder: 5, image: 0 },
-      { folder: 4, image: 0 },
-      { folder: 5, image: 1 },
-      { folder: 1, image: 2 }
-    ];
-    let editorialIndex = 0;
-
-    const editorialMainImg = document.getElementById('editorialMainImg');
-    const editorialTitle = document.getElementById('editorialTitle');
-    const editorialText = document.getElementById('editorialText');
-    const editorialSide = document.getElementById('editorialSide');
-
-    function renderEditorialSide() {
-      editorialSide.innerHTML = '';
-      editorialPool.forEach((item, index) => {
-        const cat = portfolioData[item.folder];
-        const thumb = document.createElement('div');
-        thumb.className = 'editorial-thumb';
-        thumb.innerHTML = `<img src="${cat.images[item.image]}" alt="${cat.name} editorial ${index + 1}"><span>${cat.name}</span>`;
-        thumb.addEventListener('click', () => setEditorial(index));
-        editorialSide.appendChild(thumb);
-      });
-    }
-
-    function setEditorial(index) {
-      editorialIndex = index;
-      const item = editorialPool[index];
-      const cat = portfolioData[item.folder];
-      editorialMainImg.style.opacity = '0.45';
-      setTimeout(() => {
-        editorialMainImg.src = cat.images[item.image];
-        editorialMainImg.style.opacity = '1';
-      }, 170);
-      editorialTitle.textContent = cat.name;
-      editorialText.textContent = cat.description;
-    }
-
-    document.getElementById('editorialPrev').addEventListener('click', () => setEditorial((editorialIndex - 1 + editorialPool.length) % editorialPool.length));
-    document.getElementById('editorialNext').addEventListener('click', () => setEditorial((editorialIndex + 1) % editorialPool.length));
-    document.getElementById('editorialOpen').addEventListener('click', () => {
-      const item = editorialPool[editorialIndex];
-      openLightbox(item.folder, item.image);
-    });
-
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lbImg');
-    const lbTitle = document.getElementById('lbTitle');
-    const lbText = document.getElementById('lbText');
-    const lbIndex = document.getElementById('lbIndex');
-    const lbFolder = document.getElementById('lbFolder');
-
-    function openLightbox(categoryIndex, imageIndex) {
-      lightboxCategory = categoryIndex;
-      lightboxIndex = imageIndex;
-      updateLightbox();
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function updateLightbox() {
-      const category = portfolioData[lightboxCategory];
-      lbImg.src = category.images[lightboxIndex];
-      lbTitle.textContent = category.name;
-      lbText.textContent = category.description;
-      lbIndex.textContent = `Image ${lightboxIndex + 1} of ${category.images.length}`;
-      lbFolder.textContent = `Folder: ${category.name}`;
-    }
-
-    function moveLightbox(step) {
-      const category = portfolioData[lightboxCategory];
-      lightboxIndex = (lightboxIndex + step + category.images.length) % category.images.length;
-      updateLightbox();
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      lightbox.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('lbPrev').addEventListener('click', () => moveLightbox(-1));
-    document.getElementById('lbNext').addEventListener('click', () => moveLightbox(1));
-    document.getElementById('lbClose').addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-
-    window.addEventListener('keydown', (e) => {
-      if (lightbox.classList.contains('open')) {
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') moveLightbox(-1);
-        if (e.key === 'ArrowRight') moveLightbox(1);
-      }
-    });
-
-    makeFolderRail();
-    buildStages();
-    renderEditorialSide();
-    setEditorial(0);
-    activateCategory(0, false);
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.transform = 'translateY(0)';
-          entry.target.style.opacity = '1';
-        }
-      });
-    }, { threshold: 0.14 });
-
-    document.querySelectorAll('.window, .stat, .folder-chip, .editorial-thumb, .info-panel, .quote-panel, .board-copy').forEach(el => {
-      el.style.transform = 'translateY(18px)';
-      el.style.opacity = '0';
-      el.style.transition = 'transform 700ms ease, opacity 700ms ease';
-      observer.observe(el);
-    });
-  </script>
 </body>
 </html>
