@@ -167,6 +167,29 @@
     margin-bottom: 20px;
   }
 
+  .name-row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 2px solid rgba(219,192,163,0.45);
+    box-shadow: 0 0 0 6px rgba(219,192,163,0.10), 0 8px 32px rgba(0,0,0,0.4);
+    flex-shrink: 0;
+    filter: saturate(0.9) contrast(1.05);
+    transition: transform 500ms ease, box-shadow 500ms ease;
+  }
+  .profile-avatar:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 8px rgba(219,192,163,0.18), 0 12px 40px rgba(0,0,0,0.5);
+  }
+
   h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(56px, 10vw, 118px);
@@ -871,7 +894,10 @@
       <div class="intro-card">
         <div>
           <div class="eyebrow">Fashion Design Portfolio</div>
-          <h1><span class="accent">Bronali</span><br>Couture</h1>
+          <div class="name-row">
+            <img class="profile-avatar" src="profile.jpg" alt="Bronali Manthena" onerror="this.style.display='none'">
+            <h1><span class="accent">Bronali</span><br>Couture</h1>
+          </div>
           <p class="intro-copy">
             I am Bronali Manthena, a fashion design student drawn to elegance, femininity, and refined silhouettes.
             My work explores timeless aesthetics with a modern sensibility inspired by the artistry of luxury fashion.
