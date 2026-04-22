@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bronali Couture Portfolio</title>
+<title>Bronali Portfolio</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
@@ -13,7 +13,6 @@ body {
   background: #050505;
   color: #fff;
   font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
 }
 
 /* HERO */
@@ -24,75 +23,48 @@ body {
   align-items: center;
   flex-direction: column;
   text-align: center;
-  position: relative;
 }
 
 .hero h1 {
-  font-size: 90px;
-  letter-spacing: 8px;
+  font-size: 80px;
+  letter-spacing: 6px;
   font-family: 'Playfair Display', serif;
-  animation: fadeUp 1.5s ease;
 }
 
 .hero p {
-  width: 55%;
+  width: 60%;
   opacity: 0.75;
   line-height: 1.8;
-  animation: fadeUp 2s ease;
 }
 
-/* SCROLL LINE */
-.scroll-line {
-  position: absolute;
-  bottom: 30px;
-  width: 1px;
-  height: 80px;
-  background: white;
-  animation: scrollAnim 2s infinite;
-}
-
-@keyframes scrollAnim {
-  0% {opacity:0; transform: translateY(-20px);} 
-  50% {opacity:1;} 
-  100% {opacity:0; transform: translateY(20px);} 
-}
-
-/* SECTIONS */
+/* SECTION */
 .section {
-  padding: 100px 12%;
+  padding: 100px 10%;
 }
 
 .section-title {
-  font-size: 40px;
+  font-size: 38px;
+  margin-bottom: 40px;
   font-family: 'Playfair Display', serif;
-  margin-bottom: 50px;
-}
-
-/* PARALLAX IMAGES */
-.parallax {
-  height: 90vh;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
 }
 
 /* GRID */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
   gap: 20px;
 }
 
 .grid img {
   width: 100%;
-  height: 320px;
+  height: 300px;
   object-fit: cover;
-  transition: transform 0.6s ease, opacity 0.6s ease;
+  transition: 0.5s;
+  cursor: pointer;
 }
 
 .grid img:hover {
-  transform: scale(1.08);
-  opacity: 0.9;
+  transform: scale(1.05);
 }
 
 /* EDITORIAL */
@@ -106,34 +78,16 @@ body {
   grid-row: span 2;
 }
 
-.editorial img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.editorial img:hover {
-  transform: scale(1.05);
-}
-
 /* CORE */
 .core {
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  gap: 25px;
+  gap: 20px;
 }
 
 .card {
-  background: rgba(255,255,255,0.03);
-  padding: 30px;
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  transition: transform 0.4s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
+  background: #111;
+  padding: 25px;
 }
 
 /* LIGHTBOX */
@@ -143,24 +97,16 @@ body {
   left:0;
   width:100%;
   height:100%;
-  background: rgba(0,0,0,0.95);
   display:none;
   justify-content:center;
   align-items:center;
-  z-index:100;
+  background: rgba(0,0,0,0.95);
 }
 
 .lightbox img {
   max-width:90%;
   max-height:90%;
 }
-
-/* FADE */
-@keyframes fadeUp {
-  from {opacity:0; transform: translateY(40px);} 
-  to {opacity:1; transform: translateY(0);} 
-}
-
 </style>
 </head>
 
@@ -171,15 +117,11 @@ body {
   <h1>BRONALI</h1>
   <p>
     I am Bronali Manthena, a fashion design student drawn to elegance, femininity, and refined silhouettes.
-    My work explores timeless aesthetics with a modern sensibility, inspired by the artistry of luxury fashion.
+    My work explores timeless aesthetics with a modern sensibility inspired by luxury fashion.
     <br><br>
-    Fashion is storytelling — where craftsmanship and identity meet.
+    Fashion is storytelling where creativity, craftsmanship, and identity come together.
   </p>
-  <div class="scroll-line"></div>
 </section>
-
-<!-- PARALLAX -->
-<div class="parallax" style="background-image:url('look1/img1.jpg')"></div>
 
 <!-- CORE -->
 <section class="section">
@@ -200,28 +142,34 @@ body {
   </div>
 </section>
 
-<!-- LOOKS -->
+<!-- LOOK1 -->
 <section class="section">
-  <h2 class="section-title">Runway Looks</h2>
+  <h2 class="section-title">Look 01</h2>
   <div class="grid">
-    <img src="look1/img1.jpg" onclick="openLightbox(this.src)">
-    <img src="look1/img2.jpg" onclick="openLightbox(this.src)">
-    <img src="look2/img1.jpg" onclick="openLightbox(this.src)">
-    <img src="look2/img2.jpg" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/look1/1.jpg" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/look1/2.jpg" onclick="openLightbox(this.src)">
   </div>
 </section>
 
-<!-- PARALLAX -->
-<div class="parallax" style="background-image:url('capsule-collection/img1.jpg')"></div>
+<!-- LOOK2 -->
+<section class="section">
+  <h2 class="section-title">Look 02</h2>
+  <div class="grid">
+    <img src="bunny_fd/look2/1.jpg" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/look2/2.jpg" onclick="openLightbox(this.src)">
+  </div>
+</section>
 
 <!-- CAPSULE -->
 <section class="section">
   <h2 class="section-title">Capsule Collection</h2>
   <div class="editorial">
-    <div class="big"><img src="capsule-collection/img1.jpg" onclick="openLightbox(this.src)"></div>
-    <div><img src="capsule-collection/img2.jpg" onclick="openLightbox(this.src)"></div>
-    <div><img src="capsule-collection/img3.jpg" onclick="openLightbox(this.src)"></div>
-    <div><img src="capsule-collection/img4.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="big">
+      <img src="bunny_fd/capsule_collections/1.jpg" onclick="openLightbox(this.src)">
+    </div>
+    <div><img src="bunny_fd/capsule_collections/2.jpg" onclick="openLightbox(this.src)"></div>
+    <div><img src="bunny_fd/capsule_collections/3.jpg" onclick="openLightbox(this.src)"></div>
+    <div><img src="bunny_fd/capsule_collections/4.jpg" onclick="openLightbox(this.src)"></div>
   </div>
 </section>
 
@@ -229,9 +177,9 @@ body {
 <section class="section">
   <h2 class="section-title">Illustrations</h2>
   <div class="grid">
-    <img src="illustrations/img1.jpg" onclick="openLightbox(this.src)">
-    <img src="illustrations/img2.jpg" onclick="openLightbox(this.src)">
-    <img src="illustrations/img3.jpg" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/illustrations/1.jpg" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/illustrations/2.jpg" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/illustrations/3.jpg" onclick="openLightbox(this.src)">
   </div>
 </section>
 
@@ -242,12 +190,12 @@ body {
 
 <script>
 function openLightbox(src){
-  document.getElementById('lightbox').style.display='flex';
-  document.getElementById('lightbox-img').src=src;
+  document.getElementById("lightbox").style.display="flex";
+  document.getElementById("lightbox-img").src=src;
 }
 
 function closeLightbox(){
-  document.getElementById('lightbox').style.display='none';
+  document.getElementById("lightbox").style.display="none";
 }
 </script>
 
