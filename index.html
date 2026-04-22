@@ -883,6 +883,7 @@
     <div class="brand"><span class="brand-mark"></span> Bronali · Couture</div>
     <nav class="topnav" id="topNav">
       <a href="#portfolio">Portfolio</a>
+      <a href="#illustration-section">Illustration Edit</a>
       <a href="#footer-end">Contact</a>
     </nav>
   </div>
@@ -907,6 +908,7 @@
           <div class="hero-meta" id="heroMeta"></div>
           <div class="hero-actions">
             <a class="cta" href="#portfolio">Enter portfolio</a>
+            <a class="cta secondary" href="#illustration-section">View illustration stories</a>
           </div>
         </div>
       </div>
@@ -958,5 +960,305 @@
     <div class="folder-rail" id="folderRail"></div>
     <div id="featureStages"></div>
 
+    <div class="section-divider" id="illustration-section"></div>
+    <div class="section-head">
+      <div>
+        <h3>Illustration edit</h3>
+        <p>A dedicated editorial section treating selected works like a fashion magazine spread — large-format visuals, supporting frames, and clean cinematic transitions.</p>
+      </div>
+    </div>
+
+    <div class="editorial-grid">
+      <div class="editorial-main" id="editorialMain">
+        <img id="editorialMainImg" src="bunny_fd/illustrations/1.JPG" alt="Editorial fashion illustration">
+        <div class="editorial-note">
+          <h4 id="editorialTitle">Illustrations</h4>
+          <p id="editorialText">A broader illustration collection showing range in rendering, visual storytelling, and artistic voice.</p>
+          <div class="controls">
+            <button id="editorialPrev">Previous</button>
+            <button id="editorialNext">Next</button>
+            <button id="editorialOpen">Open fullscreen</button>
+          </div>
+        </div>
+      </div>
+      <div class="editorial-side" id="editorialSide"></div>
+    </div>
   </section>
 </main>
+
+<footer class="footer" id="footer-end">
+  <div class="footer-box">
+    <div>
+      <h4>Bronali — Portfolio in couture form</h4>
+      <p>Crafted as a luxury digital portfolio with fullscreen image experiences, board-style layouts, elegant transitions, and a refined fashion presentation made for college reviews, internships, and professional sharing.</p>
+    </div>
+    <a href="#top" class="cta">Back to top</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox-shell">
+    <button class="close" id="lbClose">Close ✕</button>
+    <div class="lightbox-media">
+      <img id="lbImg" alt="Bronali portfolio fullscreen preview">
+    </div>
+    <div class="lightbox-side">
+      <div>
+        <small>Bronali Couture</small>
+        <h5 id="lbTitle">Bronali</h5>
+        <p id="lbText"></p>
+        <ul>
+          <li id="lbIndex"></li>
+          <li id="lbFolder"></li>
+          <li>Luxury fashion portfolio presentation with cinematic transitions.</li>
+        </ul>
+      </div>
+      <div class="lb-actions">
+        <button id="lbPrev">← Previous</button>
+        <button id="lbNext">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const portfolioData = [
+    {
+      name: "Capsule Collection",
+      description: "A curated capsule collection exploring refined silhouettes, tonal palettes, and cohesive fashion narratives.",
+      type: "fullscreen",
+      images: [
+        "bunny_fd/capsule_collections/1.JPG","bunny_fd/capsule_collections/2.JPG",
+        "bunny_fd/capsule_collections/3.JPG","bunny_fd/capsule_collections/4.JPG",
+        "bunny_fd/capsule_collections/5.JPG","bunny_fd/capsule_collections/6.JPG"
+      ]
+    },
+    {
+      name: "Design Process",
+      description: "Concept development, ideation, and the working evolution behind finished pieces.",
+      type: "board",
+      images: ["bunny_fd/Design Process/1.JPG","bunny_fd/Design Process/2.JPG","bunny_fd/Design Process/3.JPG"]
+    },
+    {
+      name: "Digital Illustrations",
+      description: "Digitally developed artworks with expressive form, texture, and stylized fashion energy.",
+      type: "fullscreen",
+      images: ["bunny_fd/Digital illustrations/1.JPG","bunny_fd/Digital illustrations/2.JPG","bunny_fd/Digital illustrations/3.JPG"]
+    },
+    {
+      name: "Fabric Paintings",
+      description: "Hand-touched fabric art pieces that merge fashion sensitivity with painterly expression.",
+      type: "board",
+      images: ["bunny_fd/fabric paintings/1.JPG","bunny_fd/fabric paintings/2.JPG"]
+    },
+    {
+      name: "Fashion Illustrations",
+      description: "Stylized fashion figures and visual narratives focused on silhouette, mood, and editorial presence.",
+      type: "fullscreen",
+      images: ["bunny_fd/fashion illustrations/1.JPG","bunny_fd/fashion illustrations/2.JPG","bunny_fd/fashion illustrations/3.JPG"]
+    },
+    {
+      name: "Illustrations",
+      description: "A broader illustration collection showing range in rendering, visual storytelling, and artistic voice.",
+      type: "fullscreen",
+      images: ["bunny_fd/illustrations/1.JPG","bunny_fd/illustrations/2.JPG"]
+    },
+    {
+      name: "Textile Designs",
+      description: "Surface explorations and textile-driven visual compositions shaped for fashion storytelling.",
+      type: "board",
+      images: ["bunny_fd/Textile Designs/1.JPG","bunny_fd/Textile Designs/2.JPG","bunny_fd/Textile Designs/3.JPG"]
+    }
+  ];
+
+  const heroMeta      = document.getElementById('heroMeta');
+  const folderRail    = document.getElementById('folderRail');
+  const featureStages = document.getElementById('featureStages');
+  const heroImage     = document.getElementById('heroImage');
+  let activeCategory = 0, lightboxCategory = 0, lightboxIndex = 0;
+
+  const totalImages = portfolioData.reduce((s,c) => s + c.images.length, 0);
+  [
+    { value: portfolioData.length, label: 'curated collections' },
+    { value: totalImages, label: 'portfolio visuals' },
+    { value: 'Live', label: 'fullscreen galleries' }
+  ].forEach(item => {
+    const node = document.createElement('div');
+    node.className = 'stat';
+    node.innerHTML = `<strong>${item.value}</strong><span>${item.label}</span>`;
+    heroMeta.appendChild(node);
+  });
+
+  function makeFolderRail() {
+    portfolioData.forEach((cat, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'folder-chip';
+      btn.innerHTML = `<strong>${cat.name}</strong><span>${cat.images.length} visuals · ${cat.type === 'board' ? 'board layout' : 'fullscreen gallery'}</span>`;
+      btn.addEventListener('click', () => activateCategory(i, true));
+      folderRail.appendChild(btn);
+    });
+  }
+
+  function boardClass(i) { return ['span-4x4','span-5x3','span-3x3','span-7x4','span-6x3','span-6x4'][i % 6]; }
+
+  function createBoardStage(cat, ci) {
+    const stage = document.createElement('section');
+    stage.className = 'feature-stage';
+    const board = document.createElement('div');
+    board.className = 'board-grid';
+    board.innerHTML = `<div class="board-copy"><small class="eyebrow" style="margin-bottom:12px;display:block;">Fashion board layout</small><h4>${cat.name}</h4><p>${cat.description}</p><div class="controls"><button data-cat="${ci}" data-mode="prev">← Previous</button><button data-cat="${ci}" data-mode="next">Next →</button></div></div><div class="mood-board"></div>`;
+    const wrap = board.querySelector('.mood-board');
+    cat.images.forEach((img, ii) => {
+      const tile = document.createElement('article');
+      tile.className = `board-tile ${boardClass(ii)}`;
+      tile.innerHTML = `<img src="${img}" alt="${cat.name} ${ii+1}" loading="lazy"><div class="board-badge">${cat.name}</div>`;
+      tile.addEventListener('click', () => openLightbox(ci, ii));
+      wrap.appendChild(tile);
+      requestAnimationFrame(() => setTimeout(() => tile.classList.add('show'), 70 * ii));
+    });
+    stage.appendChild(board);
+    return stage;
+  }
+
+  function createFullscreenStage(cat, ci) {
+    const stage = document.createElement('section');
+    stage.className = 'feature-stage';
+    stage.innerHTML = `<div class="stage-shell"><div class="fullscreen-view"><img id="feature-main-${ci}" src="${cat.images[0]}" alt="${cat.name} featured"><div class="fullscreen-overlay"><div class="view-top"><div class="view-tag">${cat.name}</div><div class="counter-pill" id="counter-${ci}">01 / ${String(cat.images.length).padStart(2,'0')}</div></div><div class="view-bottom"><h4>${cat.name}</h4><p>${cat.description}</p></div></div></div><div class="side-stack"><div class="info-panel"><small>Runway transition gallery</small><h5>${cat.name}</h5><p>${cat.description}</p><div class="controls"><button data-cat="${ci}" data-action="prev-slide">← Previous</button><button data-cat="${ci}" data-action="next-slide">Next →</button><button data-cat="${ci}" data-action="open-slide">Fullscreen</button></div></div><div class="thumb-strip" id="thumbs-${ci}"></div><div class="quote-panel"><p>"Fashion becomes memorable when image, silhouette, and atmosphere move together."</p><span>Bronali Couture · visual archive</span></div></div></div>`;
+    const thumbs = stage.querySelector(`#thumbs-${ci}`);
+    cat.images.slice(0,8).forEach((img, ii) => {
+      const t = document.createElement('button');
+      t.className = 'thumb';
+      t.innerHTML = `<img src="${img}" alt="${cat.name} thumb ${ii+1}" loading="lazy">`;
+      t.addEventListener('click', () => setFeatureImage(ci, ii));
+      thumbs.appendChild(t);
+    });
+    return stage;
+  }
+
+  function buildStages() {
+    portfolioData.forEach((cat, i) => {
+      featureStages.appendChild(cat.type === 'board' ? createBoardStage(cat, i) : createFullscreenStage(cat, i));
+    });
+  }
+
+  const featureState = {};
+  portfolioData.forEach((_,i) => featureState[i] = 0);
+
+  function setFeatureImage(ci, ii) {
+    featureState[ci] = ii;
+    const img = document.getElementById(`feature-main-${ci}`);
+    if (!img) return;
+    img.style.opacity = '0.4'; img.style.transform = 'scale(1.04)';
+    setTimeout(() => { img.src = portfolioData[ci].images[ii]; img.style.opacity = '1'; img.style.transform = 'scale(1)'; }, 180);
+    const counter = document.getElementById(`counter-${ci}`);
+    if (counter) counter.textContent = `${String(ii+1).padStart(2,'0')} / ${String(portfolioData[ci].images.length).padStart(2,'0')}`;
+    document.querySelectorAll(`#thumbs-${ci} .thumb`).forEach((t,idx) => t.classList.toggle('active', idx===ii));
+    if (activeCategory === ci) heroImage.src = portfolioData[ci].images[ii];
+  }
+
+  function activateCategory(index, scroll) {
+    activeCategory = index;
+    document.querySelectorAll('.folder-chip').forEach((c,i) => c.classList.toggle('active', i===index));
+    document.querySelectorAll('.feature-stage').forEach((s,i) => s.classList.toggle('active', i===index));
+    heroImage.src = portfolioData[index].images[featureState[index] || 0];
+    if (document.getElementById(`feature-main-${index}`)) setFeatureImage(index, featureState[index] || 0);
+    if (scroll) document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  featureStages.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-action],button[data-mode]');
+    if (!btn) return;
+    const ci = Number(btn.dataset.cat);
+    if (btn.dataset.mode === 'prev') activateCategory((ci - 1 + portfolioData.length) % portfolioData.length, true);
+    if (btn.dataset.mode === 'next') activateCategory((ci + 1) % portfolioData.length, true);
+    if (btn.dataset.action === 'prev-slide') setFeatureImage(ci, (featureState[ci] - 1 + portfolioData[ci].images.length) % portfolioData[ci].images.length);
+    if (btn.dataset.action === 'next-slide') setFeatureImage(ci, (featureState[ci] + 1) % portfolioData[ci].images.length);
+    if (btn.dataset.action === 'open-slide') openLightbox(ci, featureState[ci] || 0);
+  });
+
+  // editorial
+  const editorialPool = [{ folder: 4, image: 0 },{ folder: 5, image: 0 },{ folder: 2, image: 0 },{ folder: 0, image: 0 }];
+  let editorialIndex = 0;
+  const editorialMainImg = document.getElementById('editorialMainImg');
+  const editorialTitle   = document.getElementById('editorialTitle');
+  const editorialText    = document.getElementById('editorialText');
+  const editorialSide    = document.getElementById('editorialSide');
+
+  function renderEditorialSide() {
+    editorialSide.innerHTML = '';
+    editorialPool.forEach((item, idx) => {
+      const cat = portfolioData[item.folder];
+      const thumb = document.createElement('div');
+      thumb.className = 'editorial-thumb';
+      thumb.innerHTML = `<img src="${cat.images[item.image]}" alt="${cat.name}"><span>${cat.name}</span>`;
+      thumb.addEventListener('click', () => setEditorial(idx));
+      editorialSide.appendChild(thumb);
+    });
+  }
+
+  function setEditorial(idx) {
+    editorialIndex = idx;
+    const item = editorialPool[idx];
+    const cat  = portfolioData[item.folder];
+    editorialMainImg.style.opacity = '0.45';
+    setTimeout(() => { editorialMainImg.src = cat.images[item.image]; editorialMainImg.style.opacity = '1'; }, 170);
+    editorialTitle.textContent = cat.name;
+    editorialText.textContent  = cat.description;
+  }
+
+  document.getElementById('editorialPrev').addEventListener('click', () => setEditorial((editorialIndex - 1 + editorialPool.length) % editorialPool.length));
+  document.getElementById('editorialNext').addEventListener('click', () => setEditorial((editorialIndex + 1) % editorialPool.length));
+  document.getElementById('editorialOpen').addEventListener('click', () => { const item = editorialPool[editorialIndex]; openLightbox(item.folder, item.image); });
+
+  // lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg'), lbTitle = document.getElementById('lbTitle');
+  const lbText = document.getElementById('lbText'), lbIndex = document.getElementById('lbIndex');
+  const lbFolder = document.getElementById('lbFolder');
+
+  function openLightbox(ci, ii) {
+    lightboxCategory = ci; lightboxIndex = ii; updateLightbox();
+    lightbox.classList.add('open'); lightbox.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function updateLightbox() {
+    const cat = portfolioData[lightboxCategory];
+    lbImg.src = cat.images[lightboxIndex]; lbTitle.textContent = cat.name;
+    lbText.textContent = cat.description;
+    lbIndex.textContent = `Image ${lightboxIndex+1} of ${cat.images.length}`;
+    lbFolder.textContent = `Collection: ${cat.name}`;
+  }
+  function moveLightbox(step) {
+    const cat = portfolioData[lightboxCategory];
+    lightboxIndex = (lightboxIndex + step + cat.images.length) % cat.images.length;
+    updateLightbox();
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lbPrev').addEventListener('click', () => moveLightbox(-1));
+  document.getElementById('lbNext').addEventListener('click', () => moveLightbox(1));
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  window.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') moveLightbox(-1);
+    if (e.key === 'ArrowRight') moveLightbox(1);
+  });
+
+  makeFolderRail(); buildStages(); renderEditorialSide(); setEditorial(0); activateCategory(0, false);
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.transform = 'translateY(0)'; entry.target.style.opacity = '1'; } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.window, .stat, .folder-chip, .info-panel, .quote-panel, .board-copy').forEach(el => {
+    el.style.transform = 'translateY(18px)'; el.style.opacity = '0';
+    el.style.transition = 'transform 700ms ease, opacity 700ms ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
