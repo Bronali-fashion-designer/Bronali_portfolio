@@ -3,14 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Bronali Couture</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-
-/* GLOBAL */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -19,21 +16,18 @@ body {
   overflow-x: hidden;
 }
 
-/* VIDEO BACKGROUND */
+/* VIDEO */
 .video-bg {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
 }
-
 .video-bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(35%) contrast(110%);
+  filter: brightness(35%);
 }
 
 /* HERO */
@@ -45,17 +39,13 @@ body {
   flex-direction:column;
   text-align:center;
 }
-
 .hero h1 {
   font-family: 'Playfair Display', serif;
   font-size: 90px;
-  letter-spacing: 8px;
 }
-
 .hero p {
-  width: 55%;
-  opacity: 0.85;
-  line-height: 1.8;
+  width:55%;
+  opacity:0.8;
 }
 
 /* SECTION */
@@ -63,11 +53,10 @@ body {
   padding: 100px 12%;
   backdrop-filter: blur(10px);
 }
-
 .section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 40px;
-  margin-bottom: 40px;
+  font-size:40px;
+  font-family:'Playfair Display';
+  margin-bottom:30px;
 }
 
 /* GRID */
@@ -76,74 +65,37 @@ body {
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:20px;
 }
-
 .grid img {
   width:100%;
   height:320px;
   object-fit:cover;
   cursor:pointer;
-  transition:0.6s;
+  transition:0.5s;
 }
-
 .grid img:hover {
   transform:scale(1.08);
-}
-
-/* CORE CARDS */
-.core {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-}
-
-.card {
-  background: rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  padding:30px;
-  backdrop-filter: blur(20px);
-  transition:0.4s;
-}
-
-.card:hover {
-  transform:translateY(-10px);
 }
 
 /* LIGHTBOX */
 .lightbox {
   position:fixed;
-  top:0;
-  left:0;
   width:100%;
   height:100%;
   display:none;
   justify-content:center;
   align-items:center;
-  background: rgba(0,0,0,0.95);
+  background:black;
 }
-
 .lightbox img {
   max-width:90%;
   max-height:90%;
 }
-
-/* SCROLL ANIMATION */
-.fade {
-  opacity:0;
-  transform:translateY(40px);
-  transition:1s;
-}
-
-.fade.show {
-  opacity:1;
-  transform:translateY(0);
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
+<!-- VIDEO -->
 <div class="video-bg">
   <video autoplay muted loop>
     <source src="video.mp4" type="video/mp4">
@@ -151,135 +103,61 @@ body {
 </div>
 
 <!-- HERO -->
-<section class="hero fade">
+<section class="hero">
   <h1>BRONALI</h1>
-  <p>
-    I am Bronali Manthena, a fashion design student drawn to elegance, femininity, and refined silhouettes.
-    My work explores timeless aesthetics with a modern sensibility inspired by luxury fashion.
-    <br><br>
-    Fashion is storytelling where creativity, craftsmanship, and identity come together.
-  </p>
+  <p>Luxury fashion portfolio exploring elegance and modern femininity.</p>
 </section>
 
-<!-- CORE -->
-<section class="section fade">
-  <h2 class="section-title">Bronali Core</h2>
-  <div class="core">
-    <div class="card">
-      <h3>Education</h3>
-      <p>Dhruva College of Design</p>
-    </div>
-    <div class="card">
-      <h3>Interests</h3>
-      <p>Fashion Illustration<br>Designing<br>Styling</p>
-    </div>
-    <div class="card">
-      <h3>Vision</h3>
-      <p>Luxury storytelling through refined silhouettes.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CAPSULE -->
-<section class="section fade">
-  <h2 class="section-title">Capsule Collection</h2>
-  <div class="grid">
-    <img src="bunny_fd/capsule_collections/1.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/capsule_collections/2.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/capsule_collections/3.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/capsule_collections/4.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/capsule_collections/5.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/capsule_collections/6.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/capsule_collections/7.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/capsule_collections/8.JPG" onclick="openLightbox(this.src)">
-  </div>
-</section>
-
-<!-- DESIGN PROCESS -->
-<section class="section fade">
-  <h2 class="section-title">Design Process</h2>
-  <div class="grid">
-    <img src="bunny_fd/Design Process/1.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/Design Process/2.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/Design Process/3.JPG" onclick="openLightbox(this.src)">
-  </div>
-</section>
-
-<!-- DIGITAL -->
-<section class="section fade">
-  <h2 class="section-title">Digital Illustrations</h2>
-  <div class="grid">
-    <img src="bunny_fd/Digital illustrations/1.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/Digital illustrations/2.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/Digital illustrations/3.JPG" onclick="openLightbox(this.src)">
-  </div>
-</section>
-
-<!-- FABRIC -->
-<section class="section fade">
-  <h2 class="section-title">Fabric Paintings</h2>
-  <div class="grid">
-    <img src="bunny_fd/fabric paintings/1.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/fabric paintings/2.JPG" onclick="openLightbox(this.src)">
-  </div>
-</section>
-
-<!-- FASHION -->
-<section class="section fade">
-  <h2 class="section-title">Fashion Illustrations</h2>
-  <div class="grid">
-    <img src="bunny_fd/fashion illustrations/1.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/fashion illustrations/2.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/fashion illustrations/3.JPG" onclick="openLightbox(this.src)">
-  </div>
-</section>
-
-<!-- ILLUSTRATIONS -->
-<section class="section fade">
-  <h2 class="section-title">Illustrations</h2>
-  <div class="grid">
-    <img src="bunny_fd/illustrations/1.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/illustrations/2.JPG" onclick="openLightbox(this.src)">
-  </div>
-</section>
-
-<!-- TEXTILE -->
-<section class="section fade">
-  <h2 class="section-title">Textile Designs</h2>
-  <div class="grid">
-    <img src="bunny_fd/Textile Designs/1.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/Textile Designs/2.JPG" onclick="openLightbox(this.src)">
-    <img src="bunny_fd/Textile Designs/3.JPG" onclick="openLightbox(this.src)">
-  </div>
-</section>
+<!-- CONTAINER -->
+<div id="gallery-container"></div>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<div class="lightbox" id="lightbox" onclick="this.style.display='none'">
   <img id="lightbox-img">
 </div>
 
 <script>
 
-/* LIGHTBOX */
-function openLightbox(src){
-  document.getElementById("lightbox").style.display="flex";
-  document.getElementById("lightbox-img").src=src;
-}
+/* 🔥 DEFINE YOUR FOLDERS + IMAGE COUNTS HERE */
+const sections = [
+  { title: "Capsule Collection", folder: "bunny_fd/capsule_collections/", count: 6 },
+  { title: "Design Process", folder: "bunny_fd/Design Process/", count: 3 },
+  { title: "Digital Illustrations", folder: "bunny_fd/Digital illustrations/", count: 3 },
+  { title: "Fabric Paintings", folder: "bunny_fd/fabric paintings/", count: 2 },
+  { title: "Fashion Illustrations", folder: "bunny_fd/fashion illustrations/", count: 3 },
+  { title: "Illustrations", folder: "bunny_fd/illustrations/", count: 2 },
+  { title: "Textile Designs", folder: "bunny_fd/Textile Designs/", count: 3 }
+];
 
-function closeLightbox(){
-  document.getElementById("lightbox").style.display="none";
-}
+/* AUTO GENERATE UI */
+const container = document.getElementById("gallery-container");
 
-/* SCROLL ANIMATION */
-const elements = document.querySelectorAll('.fade');
+sections.forEach(sec => {
+  const section = document.createElement("section");
+  section.className = "section";
 
-window.addEventListener('scroll', () => {
-  elements.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-    if(top < window.innerHeight - 100){
-      el.classList.add('show');
-    }
-  });
+  const title = document.createElement("h2");
+  title.className = "section-title";
+  title.innerText = sec.title;
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+
+  for (let i = 1; i <= sec.count; i++) {
+    const img = document.createElement("img");
+    img.src = sec.folder + i + ".JPG";
+
+    img.onclick = () => {
+      document.getElementById("lightbox").style.display = "flex";
+      document.getElementById("lightbox-img").src = img.src;
+    };
+
+    grid.appendChild(img);
+  }
+
+  section.appendChild(title);
+  section.appendChild(grid);
+  container.appendChild(section);
 });
 
 </script>
