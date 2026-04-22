@@ -3,77 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Bronali Couture</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
+  background: #000;
   color: white;
-  background: black;
-  overflow-x: hidden;
 }
 
-/* VIDEO */
+/* VIDEO BG */
 .video-bg {
   position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+  width:100%;
+  height:100%;
+  z-index:-1;
 }
 .video-bg video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
   filter: brightness(35%);
 }
 
 /* HERO */
 .hero {
-  height: 100vh;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  text-align:center;
 }
 .hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 90px;
-}
-.hero p {
-  width:55%;
-  opacity:0.8;
+  font-size:90px;
+  font-family:'Playfair Display';
 }
 
 /* SECTION */
 .section {
-  padding: 100px 12%;
-  backdrop-filter: blur(10px);
+  padding:80px 10%;
 }
 .section-title {
-  font-size:40px;
-  font-family:'Playfair Display';
+  font-size:38px;
   margin-bottom:30px;
+  font-family:'Playfair Display';
 }
 
-/* GRID */
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
+/* 🔥 MASONRY LAYOUT */
+.masonry {
+  column-count: 3;
+  column-gap: 15px;
 }
-.grid img {
+
+.masonry img {
   width:100%;
-  height:320px;
-  object-fit:cover;
+  margin-bottom:15px;
+  break-inside: avoid;
   cursor:pointer;
-  transition:0.5s;
+  transition:0.4s;
 }
-.grid img:hover {
-  transform:scale(1.08);
+
+.masonry img:hover {
+  transform:scale(1.03);
+  opacity:0.9;
 }
 
 /* LIGHTBOX */
@@ -86,10 +83,20 @@ body {
   align-items:center;
   background:black;
 }
+
 .lightbox img {
   max-width:90%;
   max-height:90%;
 }
+
+/* MOBILE */
+@media(max-width:900px){
+  .masonry { column-count:2; }
+}
+@media(max-width:500px){
+  .masonry { column-count:1; }
+}
+
 </style>
 </head>
 
@@ -105,11 +112,10 @@ body {
 <!-- HERO -->
 <section class="hero">
   <h1>BRONALI</h1>
-  <p>Luxury fashion portfolio exploring elegance and modern femininity.</p>
 </section>
 
-<!-- CONTAINER -->
-<div id="gallery-container"></div>
+<!-- GALLERY CONTAINER -->
+<div id="gallery"></div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
@@ -118,7 +124,7 @@ body {
 
 <script>
 
-/* 🔥 DEFINE YOUR FOLDERS + IMAGE COUNTS HERE */
+/* 🔥 YOUR SECTIONS */
 const sections = [
   { title: "Capsule Collection", folder: "bunny_fd/capsule_collections/", count: 6 },
   { title: "Design Process", folder: "bunny_fd/Design Process/", count: 3 },
@@ -129,10 +135,11 @@ const sections = [
   { title: "Textile Designs", folder: "bunny_fd/Textile Designs/", count: 3 }
 ];
 
-/* AUTO GENERATE UI */
-const container = document.getElementById("gallery-container");
+const container = document.getElementById("gallery");
 
+/* CREATE LUXURY MASONRY */
 sections.forEach(sec => {
+
   const section = document.createElement("section");
   section.className = "section";
 
@@ -140,24 +147,25 @@ sections.forEach(sec => {
   title.className = "section-title";
   title.innerText = sec.title;
 
-  const grid = document.createElement("div");
-  grid.className = "grid";
+  const masonry = document.createElement("div");
+  masonry.className = "masonry";
 
-  for (let i = 1; i <= sec.count; i++) {
+  for(let i=1;i<=sec.count;i++){
     const img = document.createElement("img");
     img.src = sec.folder + i + ".JPG";
 
     img.onclick = () => {
-      document.getElementById("lightbox").style.display = "flex";
+      document.getElementById("lightbox").style.display="flex";
       document.getElementById("lightbox-img").src = img.src;
     };
 
-    grid.appendChild(img);
+    masonry.appendChild(img);
   }
 
   section.appendChild(title);
-  section.appendChild(grid);
+  section.appendChild(masonry);
   container.appendChild(section);
+
 });
 
 </script>
