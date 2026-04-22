@@ -27,24 +27,23 @@ body {
   width: 100%;
   height: 100%;
   z-index: -1;
-  overflow: hidden;
 }
 
 .video-bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(40%) contrast(110%);
+  filter: brightness(35%) contrast(110%);
 }
 
 /* HERO */
 .hero {
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
 }
 
 .hero h1 {
@@ -55,11 +54,11 @@ body {
 
 .hero p {
   width: 55%;
-  opacity: 0.8;
+  opacity: 0.85;
   line-height: 1.8;
 }
 
-/* GLASS SECTION */
+/* SECTION */
 .section {
   padding: 100px 12%;
   backdrop-filter: blur(10px);
@@ -73,46 +72,45 @@ body {
 
 /* GRID */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-  gap: 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
 }
 
 .grid img {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  transition: 0.6s;
-  cursor: pointer;
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  cursor:pointer;
+  transition:0.6s;
 }
 
 .grid img:hover {
-  transform: scale(1.08);
-  filter: brightness(110%);
+  transform:scale(1.08);
 }
 
-/* GLASS CARDS */
+/* CORE CARDS */
 .core {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 25px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
 }
 
 .card {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 30px;
+  border:1px solid rgba(255,255,255,0.1);
+  padding:30px;
   backdrop-filter: blur(20px);
-  transition: 0.4s;
+  transition:0.4s;
 }
 
 .card:hover {
-  transform: translateY(-10px);
+  transform:translateY(-10px);
 }
 
 /* LIGHTBOX */
 .lightbox {
-  position: fixed;
+  position:fixed;
   top:0;
   left:0;
   width:100%;
@@ -128,16 +126,16 @@ body {
   max-height:90%;
 }
 
-/* FADE IN */
+/* SCROLL ANIMATION */
 .fade {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 1s;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
 }
 
 .fade.show {
-  opacity: 1;
-  transform: translateY(0);
+  opacity:1;
+  transform:translateY(0);
 }
 
 </style>
@@ -158,6 +156,8 @@ body {
   <p>
     I am Bronali Manthena, a fashion design student drawn to elegance, femininity, and refined silhouettes.
     My work explores timeless aesthetics with a modern sensibility inspired by luxury fashion.
+    <br><br>
+    Fashion is storytelling where creativity, craftsmanship, and identity come together.
   </p>
 </section>
 
@@ -188,6 +188,68 @@ body {
     <img src="bunny_fd/capsule_collections/2.JPG" onclick="openLightbox(this.src)">
     <img src="bunny_fd/capsule_collections/3.JPG" onclick="openLightbox(this.src)">
     <img src="bunny_fd/capsule_collections/4.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/capsule_collections/5.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/capsule_collections/6.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/capsule_collections/7.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/capsule_collections/8.JPG" onclick="openLightbox(this.src)">
+  </div>
+</section>
+
+<!-- DESIGN PROCESS -->
+<section class="section fade">
+  <h2 class="section-title">Design Process</h2>
+  <div class="grid">
+    <img src="bunny_fd/Design Process/1.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/Design Process/2.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/Design Process/3.JPG" onclick="openLightbox(this.src)">
+  </div>
+</section>
+
+<!-- DIGITAL -->
+<section class="section fade">
+  <h2 class="section-title">Digital Illustrations</h2>
+  <div class="grid">
+    <img src="bunny_fd/Digital illustrations/1.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/Digital illustrations/2.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/Digital illustrations/3.JPG" onclick="openLightbox(this.src)">
+  </div>
+</section>
+
+<!-- FABRIC -->
+<section class="section fade">
+  <h2 class="section-title">Fabric Paintings</h2>
+  <div class="grid">
+    <img src="bunny_fd/fabric paintings/1.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/fabric paintings/2.JPG" onclick="openLightbox(this.src)">
+  </div>
+</section>
+
+<!-- FASHION -->
+<section class="section fade">
+  <h2 class="section-title">Fashion Illustrations</h2>
+  <div class="grid">
+    <img src="bunny_fd/fashion illustrations/1.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/fashion illustrations/2.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/fashion illustrations/3.JPG" onclick="openLightbox(this.src)">
+  </div>
+</section>
+
+<!-- ILLUSTRATIONS -->
+<section class="section fade">
+  <h2 class="section-title">Illustrations</h2>
+  <div class="grid">
+    <img src="bunny_fd/illustrations/1.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/illustrations/2.JPG" onclick="openLightbox(this.src)">
+  </div>
+</section>
+
+<!-- TEXTILE -->
+<section class="section fade">
+  <h2 class="section-title">Textile Designs</h2>
+  <div class="grid">
+    <img src="bunny_fd/Textile Designs/1.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/Textile Designs/2.JPG" onclick="openLightbox(this.src)">
+    <img src="bunny_fd/Textile Designs/3.JPG" onclick="openLightbox(this.src)">
   </div>
 </section>
 
@@ -203,6 +265,7 @@ function openLightbox(src){
   document.getElementById("lightbox").style.display="flex";
   document.getElementById("lightbox-img").src=src;
 }
+
 function closeLightbox(){
   document.getElementById("lightbox").style.display="none";
 }
