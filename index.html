@@ -880,7 +880,7 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand"><span class="brand-mark"></span> Bronali · Couture</div>
+    <div class="brand"><span class="brand-mark"></span> Bronali Manthena</div>
     <nav class="topnav" id="topNav">
       <a href="#portfolio">Portfolio</a>
       <a href="#illustration-section">Illustration Edit</a>
@@ -953,7 +953,7 @@
     <div class="section-head">
       <div>
         <h3>Curated fashion archive</h3>
-        <p>Each collection becomes a polished visual chapter — with Dior-inspired spaciousness, Vogue-like editorial rhythm, and smooth runway-style transitions.</p>
+        <p>Each collection is crafted into a polished visual chapter where thoughtful composition, editorial balance, and seamless storytelling bring every design to life.</p>
       </div>
     </div>
 
@@ -989,8 +989,12 @@
 <footer class="footer" id="footer-end">
   <div class="footer-box">
     <div>
-      <h4>Bronali — Portfolio in couture form</h4>
-      <p>Crafted as a luxury digital portfolio with fullscreen image experiences, board-style layouts, elegant transitions, and a refined fashion presentation made for college reviews, internships, and professional sharing.</p>
+      <h4>Bronali</h4>
+      <p>Let's create something Timeless</p>
+      <p>Grateful for exploring my work. If my design philosophy resonates with your vision, I welcome the opportunity to create something exponential together.</p>
+      <p>Get in touch to begin the journey.</p>
+      <p>Mail : <a href="mailto:bronalimanthena27@gmail.com">bronalimanthena27@gmail.com</a></p>
+      <p>Contact : <a href="tel:+919618618973">9618618973</a></p>
     </div>
     <a href="#top" class="cta">Back to top</a>
   </div>
@@ -1164,7 +1168,7 @@
   function createFullscreenStage(cat, ci) {
     const stage = document.createElement('section');
     stage.className = 'feature-stage';
-    stage.innerHTML = `<div class="stage-shell"><div class="fullscreen-view"><img id="feature-main-${ci}" src="${cat.images[0]}" alt="${cat.name} featured"><div class="fullscreen-overlay"><div class="view-top"><div class="view-tag">${cat.name}</div><div class="counter-pill" id="counter-${ci}">01 / ${String(cat.images.length).padStart(2,'0')}</div></div><div class="view-bottom"><h4>${cat.name}</h4><p>${cat.description}</p></div></div></div><div class="side-stack"><div class="info-panel"><small>Runway transition gallery</small><h5>${cat.name}</h5><p>${cat.description}</p><div class="controls"><button data-cat="${ci}" data-action="prev-slide">← Previous</button><button data-cat="${ci}" data-action="next-slide">Next →</button><button data-cat="${ci}" data-action="open-slide">Fullscreen</button></div></div><div class="thumb-strip" id="thumbs-${ci}"></div><div class="quote-panel"><p>"Fashion becomes memorable when image, silhouette, and atmosphere move together."</p><span>Bronali Couture · visual archive</span></div></div></div>`;
+    stage.innerHTML = `<div class="stage-shell"><div class="fullscreen-view"><img id="feature-main-${ci}" src="${cat.images[0]}" alt="${cat.name} featured"><div class="fullscreen-overlay"><div class="view-top"><div class="view-tag">${cat.name}</div><div class="counter-pill" id="counter-${ci}">01 / ${String(cat.images.length).padStart(2,'0')}</div></div><div class="view-bottom"><h4>${cat.name}</h4><p>${cat.description}</p></div></div></div><div class="side-stack"><div class="info-panel"><small>Runway transition gallery</small><h5>${cat.name}</h5><p>${cat.description}</p><div class="controls"><button data-cat="${ci}" data-action="prev-slide">← Previous</button><button data-cat="${ci}" data-action="next-slide">Next →</button><button data-cat="${ci}" data-action="open-slide">Fullscreen</button></div></div><div class="thumb-strip" id="thumbs-${ci}"></div><div class="quote-panel"><p>"Fashion becomes memorable when image, silhouette, and atmosphere move together."</p><span>Bronali · visual archive</span></div></div></div>`;
     const thumbs = stage.querySelector(`#thumbs-${ci}`);
     cat.images.slice(0,8).forEach((img, ii) => {
       const t = document.createElement('button');
